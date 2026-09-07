@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "liagolledge",
+  "description": "Content and search tooling by Lia Golledge.",
+  "owner": {
+    "name": "Lia Golledge"
+  },
+  "plugins": [
+    {
+      "name": "seo-aeo-geo",
+      "source": "./",
+      "description": "End-to-end, industry-neutral SEO/AEO/GEO content pipeline with a per-user context pack.",
+      "category": "content"
+    }
+  ]
+}

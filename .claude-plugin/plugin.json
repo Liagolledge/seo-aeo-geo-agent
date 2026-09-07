@@ -1,0 +1,11 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "seo-aeo-geo",
+  "version": "1.0.0",
+  "description": "End-to-end, industry-neutral SEO/AEO/GEO content pipeline: query fan-out, semantic outline, source collection, article draft, pre-publish audit, and featured-image prompting. Reads a per-user context pack so it writes in your voice, for your market, sources and brand — run the setup skill once to create it.",
+  "author": {
+    "name": "Lia Golledge"
+  },
+  "homepage": "https://github.com/Liagolledge/seo-aeo-geo-agent",
+  "keywords": ["seo", "aeo", "geo", "content", "ai-search", "featured-snippets"]
+}

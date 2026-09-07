@@ -27,19 +27,14 @@ Rate every source. Never present a source without its tier.
 
 ### Tier 1 — use freely, lead with these
 
-the user's named preferences:
+**Lead with the user's preferred publishers first.** The context pack (`seo-context.md`, *Sources → Preferred lead publishers*) names the sources this user wants cited before others when they're relevant. Read it and treat those as the top of Tier 1. If the pack sets none, use the standing defaults below without asking.
 
-- **McKinsey** (and McKinsey Global Institute)
-- **Harvard Business Review**
-- **Andreessen Horowitz (a16z)**
-- **Google Research**
-- **OpenAI Research**
-
-Plus anything of equivalent standing:
+Standing Tier 1 — anything of this calibre, whether or not the user named it:
 
 - Peer-reviewed journals and academic institutions
-- Government statistics bodies (ABS, BPS Indonesia, Eurostat, US BLS, OECD, World Bank)
+- Government and intergovernmental statistics bodies (e.g. national statistics offices, Eurostat, OECD, World Bank — pick the ones that match the user's market)
 - Original research from the organisation that collected the data — the actual report, not a write-up of it
+- Major research institutions and the primary research arms of established firms
 - Standards bodies, patent filings, official documentation
 
 ### Tier 2 — usable, attribute clearly

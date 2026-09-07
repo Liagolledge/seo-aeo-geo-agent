@@ -7,11 +7,13 @@ from research to a publish-ready article optimised for three things at once:
 - **AEO** — showing up in AI Overviews and featured snippets.
 - **GEO** — getting cited inside answers from ChatGPT, Perplexity, Gemini and Claude.
 
-The agent orchestrates a six-skill pipeline. It handles sequencing, state and the approval
-gates between stages; each skill holds its own method in full.
+The agent orchestrates a six-stage pipeline. It handles sequencing, state and the approval gates
+between stages; each skill holds its own method in full. It reads a per-user **context pack** so the
+output is written in your voice, for your market, sources and brand, not generic filler.
 
 | Stage | Skill | Produces |
 |---|---|---|
+| 0 | `setup` | `seo-context.md` — your context pack (voice, market, sources, brand). Run once, first. |
 | Frame | `seo-aeo-geo-workflow` | Programme view: technical health, architecture, distribution, measurement |
 | 1 | `query-fan-out` | The demand landscape, scored and tiered (`.md` + `.csv`) |
 | 2 | `semantic-outline` | The article blueprint |
@@ -32,27 +34,44 @@ You don't need to say "SEO" or "AEO". Prompts like *"write a post about X"*, *"w
 
 ## Install
 
-These are personal (user-level) Claude Code skills and an agent. Copy them into your Claude config:
+This is a Claude Code plugin. Add the marketplace, then install:
 
 ```bash
-# Agent
-mkdir -p ~/.claude/agents
-cp agents/seo-aeo-geo.md ~/.claude/agents/
-
-# Skills
-mkdir -p ~/.claude/skills
-cp -R skills/* ~/.claude/skills/
+claude plugin marketplace add Liagolledge/seo-aeo-geo-agent
+```
+```bash
+claude plugin install seo-aeo-geo@liagolledge
 ```
 
-Then start (or restart) Claude Code. The agent appears as `seo-aeo-geo`, and each skill can also be
-invoked on its own by its bare name (e.g. `query-fan-out`, `featured-image`).
+Restart Claude Code. The agent appears as `seo-aeo-geo`, and each skill is invocable as
+`seo-aeo-geo:<skill>` (e.g. `seo-aeo-geo:query-fan-out`, `seo-aeo-geo:featured-image`).
+
+## First run: build your context pack
+
+Before writing anything, set up your context pack — it's what makes the output sound like you
+instead of generic content. Just say:
+
+> set up the SEO agent
+
+The `setup` skill interviews you (voice, sites, market, preferred sources, brand, any search-data
+tool you've connected) and writes a `seo-context.md` into your project. Every other skill reads it.
+You can edit that file by hand any time, or re-run setup to change it. Prefer to fill it in yourself?
+Copy [`context.template.md`](context.template.md) to your project root as `seo-context.md`.
+
+If you skip setup, the pipeline falls back to neutral defaults and tells you where it's guessing —
+but a filled-in pack is the difference between "on brand" and "generic".
 
 ## Structure
 
 ```
+.claude-plugin/
+  plugin.json               # plugin manifest
+  marketplace.json          # marketplace entry (install source)
+context.template.md         # the context-pack template you fill in
 agents/
   seo-aeo-geo.md            # the orchestrator
 skills/
+  setup/                    # stage 0 — builds your context pack
   seo-aeo-geo-workflow/     # programme-level frame
   query-fan-out/            # stage 1
   semantic-outline/         # stage 2
@@ -62,20 +81,22 @@ skills/
   featured-image/           # stage 6
 ```
 
-## Notes on customising
+## Customising
 
-This pack is written to be industry-neutral. A few things are worth setting for your own use:
+Everything specific to you lives in `seo-context.md`, not in the skills — so you configure once and
+never edit skill files:
 
-- **Brand system** — `featured-image` ships with a neutral placeholder palette. Point it at your own
-  brand guidelines, or replace the palette in its Step 3 with your colours, typeface and shape language.
-- **Research tooling** — several stages can use a search-data connector (Ubersuggest / Ahrefs-style)
-  when one is authorised, and fall back to web search and reasoning when it isn't. The skills label
-  every figure as measured or estimated accordingly.
-- **Worked examples** — some skills use an illustrative seed (e.g. "fractional CMO") to demonstrate a
-  method. These are just examples; swap in your own topic when you run the skill.
+- **Voice & market** — spelling, point of view, tone, target market. Drives every stage.
+- **Sources** — the publishers you want cited first. Blank uses broadly-trusted defaults.
+- **Brand system** — colour palette (hex), typography and shape language for `featured-image`. Blank
+  uses a neutral placeholder palette.
+- **Research tooling** — if you've connected a search-data MCP (Ubersuggest has a free tier; Ahrefs
+  and similar also work), record it and any usage cap. The pipeline uses real data when it's there
+  and falls back to web search and reasoning, labelling figures as measured or estimated, when it isn't.
 
 ## Provenance
 
-The `seo-aeo-geo` agent and the `featured-image` skill are original work. The five pipeline skills
-(`seo-aeo-geo-workflow`, `query-fan-out`, `semantic-outline`, `source-collection`, `article-draft`,
-`seo-article-audit`) are adapted from Anthropic's bundled Claude skills, generalised here for reuse.
+The `seo-aeo-geo` agent and the `setup` and `featured-image` skills are original work. The six
+pipeline skills (`seo-aeo-geo-workflow`, `query-fan-out`, `semantic-outline`, `source-collection`,
+`article-draft`, `seo-article-audit`) are adapted from Anthropic's bundled Claude skills, generalised
+here for reuse.
